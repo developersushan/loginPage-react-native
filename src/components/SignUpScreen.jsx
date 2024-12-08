@@ -5,14 +5,14 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { colors } from '../colors';
 import { useNavigation } from '@react-navigation/native';
-const LoginScreen = () => {
+const SignUpScreen = () => {
     const navigation = useNavigation();
     const [secureTextOpen,setSecureText] = useState(true);
     const handleBack = () =>{
         navigation.goBack();
     };
-    const handleSignUp = () => {
-        navigation.navigate('SignUp');
+    const handleLogin = () => {
+        navigation.navigate('Login');
     };
     return (
         <View style={styles.container}>
@@ -20,9 +20,8 @@ const LoginScreen = () => {
             <Ionicons  name={'arrow-back-outline'} color={colors.primary} size={25} />
             </TouchableOpacity>
             <View style={styles.textContainer}>
-                <Text style={styles.textHead}>Hey,</Text>
-                <Text style={styles.textHead}>Welcome</Text>
-                <Text style={styles.textHead}>Back</Text>
+                <Text style={styles.textHead}>Let's get</Text>
+                <Text style={styles.textHead}>started</Text>
             </View>
             {/*from container*/}
             <View style={styles.fromContainer}>
@@ -39,11 +38,12 @@ const LoginScreen = () => {
                     <SimpleLineIcons style={styles.iconInput} name={'eye'} color={colors.secondary} size={20}/>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity >
-                <Text style={styles.forgetPasswordText}> Forget password!</Text>
-                </TouchableOpacity>
+                <View style={styles.inputContainer}>
+                    <Ionicons style={styles.iconInput} name={'phone-portrait-outline'} color={colors.secondary} size={20}/>
+                    <TextInput style={styles.textInput} placeholder='Enter your number' keyboardType='phone-pad' />
+                </View>
                 <TouchableOpacity style={styles.loginButton}>
-                    <Text style={styles.loginText}>Login</Text>
+                    <Text style={styles.loginText}>SignUp</Text>
                 </TouchableOpacity>
                 <Text style={styles.continueText}>or continue with</Text>
                 <TouchableOpacity style={styles.googleButton}>
@@ -51,9 +51,9 @@ const LoginScreen = () => {
                     <Text style={styles.googleText}>Google</Text>
                 </TouchableOpacity>
                 <View style={styles.footerContainer}>
-                    <Text style={styles.accountText}>Don't have an account<AntDesign name={'question'} size={14}/></Text>
-                    <TouchableOpacity onPress={handleSignUp}>
-                    <Text style={styles.signUp}>signUp</Text>
+                    <Text style={styles.accountText}>Already have an account<AntDesign name={'question'} size={14}/></Text>
+                    <TouchableOpacity onPress={handleLogin}>
+                    <Text style={styles.signUp}>Login</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         flex:1,
         paddingHorizontal:10,
         fontWeight:300,
-        color:colors.secondary,
+        color:colors.primary,
     },
     forgetPasswordText:{
         textAlign:'right',
@@ -160,4 +160,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginScreen;
+export default SignUpScreen;
