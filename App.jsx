@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {  StyleSheet, Text, View }from 'react-native';
+import {  StyleSheet}from 'react-native';
 import HomeScreen from './src/components/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './src/components/LoginScreen';
 import SignUpScreen from './src/components/SignUpScreen';
-// import HomeScreen from './src/components/HomeScreen';
+import Tabs from './src/navigation/Tabs';
 
 
 const RootStack = createNativeStackNavigator();
@@ -21,6 +21,7 @@ export default function App(){
                 <RootStack.Screen name={'Home'} component={HomeScreen}/>
                 <RootStack.Screen name={'Login'} component={LoginScreen}/>
                 <RootStack.Screen name={'SignUp'} component={SignUpScreen}/>
+                <RootStack.Screen name={'App'} component={Tabs}/>
             </RootStack.Navigator>
         </NavigationContainer>
     );

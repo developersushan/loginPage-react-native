@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { colors } from '../colors';
 import { useNavigation } from '@react-navigation/native';
+import Helper from '../utils/Helper';
+import axios from 'axios';
 const LoginScreen = () => {
+    const [usr,setEmail] = useState('');
+    const [pwd,setPassword] = useState('');
+    const [errorMessage,setErrorMessage] = useState('');
     const navigation = useNavigation();
     const [secureTextOpen,setSecureText] = useState(true);
     const handleBack = () =>{
@@ -13,6 +18,40 @@ const LoginScreen = () => {
     };
     const handleSignUp = () => {
         navigation.navigate('SignUp');
+    };
+    {/*Login handle*/}
+
+    const handleLogin = () =>{
+        if(!usr || !pwd){
+            setErrorMessage('Email and password are required');
+            return;
+        }
+        setErrorMessage('');
+        loginApi();
+        // navigation.navigate('App');
+
+    };
+
+    const loginApi = async () => {
+        try {
+          const response = await axios.post(`${Helper.API_BASE}`, {
+            usr,
+            pwd,
+          });
+          if(response.data){
+              navigation.navigate('App');
+              console.log('Login successful:', response.data);
+          }
+        } catch (error) {
+          if (error.response) {
+            setErrorMessage(error.response.data.message || 'Login failed.');
+          } else {
+            setErrorMessage('An error occurred. Please try again.');
+          }
+        }
+      };
+    const handleForget = () =>{
+        console.log('forget password');
     };
     return (
         <View style={styles.container}>
@@ -28,21 +67,22 @@ const LoginScreen = () => {
             <View style={styles.fromContainer}>
                 <View style={styles.inputContainer}>
                     <Ionicons style={styles.iconInput} name={'mail-outline'} color={colors.secondary} size={20}/>
-                    <TextInput style={styles.textInput} placeholder='Enter your email' keyboardType='email-address'/>
+                    <TextInput value={usr} onChangeText={setEmail} style={styles.textInput} placeholder='Enter your email' keyboardType='email-address'/>
                 </View>
                 <View style={styles.inputContainer}>
                     <SimpleLineIcons style={styles.iconInput} name={'lock'} color={colors.secondary} size={20}/>
-                    <TextInput style={styles.textInput} placeholder='Enter your password' 
+                    <TextInput value={pwd} onChangeText={setPassword} style={styles.textInput} placeholder='Enter your password' 
                     secureTextEntry={secureTextOpen}
                     />
                     <TouchableOpacity onPress={()=> setSecureText((prev)=> !prev)}>
                     <SimpleLineIcons style={styles.iconInput} name={'eye'} color={colors.secondary} size={20}/>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity >
-                <Text style={styles.forgetPasswordText}> Forget password!</Text>
+                {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+                <TouchableOpacity onPress={handleForget}>
+                <Text  style={styles.forgetPasswordText}> Forget password!</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.loginButton}>
+                <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
                     <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
                 <Text style={styles.continueText}>or continue with</Text>
@@ -99,7 +139,11 @@ const styles = StyleSheet.create({
         flex:1,
         paddingHorizontal:10,
         fontWeight:300,
-        color:colors.secondary,
+        color:colors.primary,
+    },
+    errorText:{
+        color:'red',
+        fontSize:12,
     },
     forgetPasswordText:{
         textAlign:'right',

@@ -1,0 +1,31 @@
+export const CarouselData =[
+    {
+        id:'1',
+        image:require('../assets/slider1.jpg'),
+    },
+    {
+        id:'2',
+        image:require('../assets/slider2.jpg'),
+    },
+    {
+        id:'3',
+        image:require('../assets/slider3.jpg'),
+    },
+    {
+        id:'4',
+        image:require('../assets/slider4.jpg'),
+    },
+    {
+        id:'5',
+        image:require('../assets/slider5.jpg'),
+    },
+    {
+        id:'6',
+        image:require('../assets/slider6.jpg'),
+    },
+    {
+        id:'7',
+        image:require('../assets/slider7.jpg'),
+    },
+
+]
